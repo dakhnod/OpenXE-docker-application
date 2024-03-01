@@ -1,0 +1,29 @@
+name: openxe
+services:
+  php-fpm:
+    restart: always
+    build:
+      dockerfile: php-fpm/Dockerfile
+    volumes:
+      - app:/OpenXE-master
+      - userdata:/OpenXE-master/userdata
+
+  nginx:
+    restart: always
+    build:
+      dockerfile: nginx/Dockerfile
+    volumes:
+      - app:/usr/share/nginx/OpenXE-master
+
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      - MARIADB_DATABASE=openxe
+      - MARIADB_USER=openxe
+      - MARIADB_PASSWORD=openxe
+      - MARIADB_ROOT_PASSWORD=openxe_root
+
+volumes:
+  app:
+  userdata:
